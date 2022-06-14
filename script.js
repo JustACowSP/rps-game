@@ -20,3 +20,16 @@ function playRound(playerSelection, computerSelection) {
         return `You lose! ${computerSelection} beats ${playerSelection}.`
     }
 }
+
+function game() {
+    console.log('Time to play Rock, Paper, Scissors!')
+
+    for (let i = 0; i < 5; i++) {
+        console.log(`Round ${i + 1}:`)
+        playerSelection = prompt('Choose a move ("rock", "paper", "scissors"): ')
+        computerSelection = computerPlay()
+        console.log(playRound(playerSelection, computerSelection))
+    }
+}
+
+game()
