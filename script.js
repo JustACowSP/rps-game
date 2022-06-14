@@ -22,13 +22,30 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
+    let score = 0
     console.log('Time to play Rock, Paper, Scissors!')
 
     for (let i = 0; i < 5; i++) {
         console.log(`Round ${i + 1}:`)
+
         playerSelection = prompt('Choose a move ("rock", "paper", "scissors"): ')
         computerSelection = computerPlay()
-        console.log(playRound(playerSelection, computerSelection))
+        result = playRound(playerSelection, computerSelection)
+        console.log(result)
+
+        if (result.search('win') >= 0) {
+            score++
+        } else if (result.search('lose') >= 0) {
+            score--
+        }
+    }
+
+    if (score > 0) {
+        console.log('You won overall!')
+    } else if (score < 0) {
+        console.log('The computer won overall!')
+    } else {
+        console.log('You tied with the computer!')
     }
 }
 
