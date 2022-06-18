@@ -20,7 +20,8 @@ p {
     margin: 0;
 }
 
-.buttons {
+.buttons, .winner {
+    padding: 16px;
     display: flex;
     justify-content: center;
     gap: 16px

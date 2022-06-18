@@ -11,42 +11,67 @@ function playRound(playerSelection, computerSelection) {
     playerSelection = capitalize(playerSelection)
 
     if (playerSelection == computerSelection) {
-        return `Tie! You both played ${playerSelection}.`
+        return 0;
     } else if (playerSelection == 'Rock' && computerSelection == 'Scissors' ||
         playerSelection == 'Paper' && computerSelection == 'Rock' ||
         playerSelection == 'Scissors' && computerSelection == 'Rock') {
-        return `You win! ${playerSelection} beats ${computerSelection}.`
+        return 1;
     } else {
-        return `You lose! ${computerSelection} beats ${playerSelection}.`
+        return -1
     }
 }
 
 function game() {
-    let score = 0
+    let playerScore = 0;
+    let computerScore = 0;
+
+    let nodePlayerScore = document.querySelector('#playerScore');
+    let nodeComputerScore = document.querySelector('#computerScore');
+    let nodeWinner = document.querySelector('#winner');
+
     console.log('Time to play Rock, Paper, Scissors!')
 
-    for (let i = 0; i < 5; i++) {
-        console.log(`Round ${i + 1}:`)
+    // for (let i = 0; i < 5; i++) {
+    //     console.log(`Round ${i + 1}:`)
 
-        playerSelection = prompt('Choose a move ("rock", "paper", "scissors"): ')
-        computerSelection = computerPlay()
-        result = playRound(playerSelection, computerSelection)
-        console.log(result)
+    //     playerSelection = prompt('Choose a move ("rock", "paper", "scissors"): ')
+    //     computerSelection = computerPlay()
+    //     result = playRound(playerSelection, computerSelection)
+    //     console.log(result)
 
-        if (result.search('win') >= 0) {
-            score++
-        } else if (result.search('lose') >= 0) {
-            score--
+    //     if (result.search('win') >= 0) {
+    //         score++
+    //     } else if (result.search('lose') >= 0) {
+    //         score--
+    //     }
+    // }
+
+    function handleClick(clickEvent) {
+        const move = clickEvent.target.id;
+        result = playRound(move, computerPlay());
+        
+        if (playerScore < 5 && computerScore < 5) {
+            if (result === 1) {
+                playerScore += 1;
+                nodeWinner.textContent = 'Player wins this round.'
+            } else if (result === -1) {
+                computerScore += 1;
+                nodeWinner.textContent = 'Computer wins this round.'
+            } else {
+                nodeWinner.textContent = 'Tied round.'
+            }
+            
+            nodePlayerScore.textContent = playerScore;
+            nodeComputerScore.textContent = computerScore;
+        }
+        if (playerScore >= 5 || computerScore >= 5) {
+            const winner = (playerScore > computerScore) ? 'Player' : 'Computer';
+            nodeWinner.textContent = `${winner} wins!`
         }
     }
 
-    if (score > 0) {
-        console.log('You won overall!')
-    } else if (score < 0) {
-        console.log('The computer won overall!')
-    } else {
-        console.log('You tied with the computer!')
-    }
+    const moves = document.querySelectorAll('#rock, #paper, #scissors')
+    moves.forEach((move) => move.addEventListener('click', handleClick))
 }
 
 game()
