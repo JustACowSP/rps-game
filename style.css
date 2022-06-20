@@ -1,3 +1,7 @@
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 .score {
     padding: 16px;
     display: flex;
@@ -25,4 +29,8 @@ p {
     display: flex;
     justify-content: center;
     gap: 16px
+}
+
+.icon {
+    font-size: 24pt;
 }

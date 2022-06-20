@@ -29,8 +29,6 @@ function game() {
     let nodeComputerScore = document.querySelector('#computerScore');
     let nodeWinner = document.querySelector('#winner');
 
-    console.log('Time to play Rock, Paper, Scissors!')
-
     // for (let i = 0; i < 5; i++) {
     //     console.log(`Round ${i + 1}:`)
 
@@ -47,18 +45,26 @@ function game() {
     // }
 
     function handleClick(clickEvent) {
-        const move = clickEvent.target.id;
+        clickEvent.stopImmediatePropagation();
+
+        let move;
+        for (const node of clickEvent.path) {
+            if (node.nodeName == 'BUTTON') {
+                move = node.id;
+                break;
+            }
+        }
         result = playRound(move, computerPlay());
-        
+
         if (playerScore < 5 && computerScore < 5) {
             if (result === 1) {
                 playerScore += 1;
-                nodeWinner.textContent = 'Player wins this round.'
+                nodeWinner.textContent = 'Player wins this round.';
             } else if (result === -1) {
                 computerScore += 1;
-                nodeWinner.textContent = 'Computer wins this round.'
+                nodeWinner.textContent = 'Computer wins this round.';
             } else {
-                nodeWinner.textContent = 'Tied round.'
+                nodeWinner.textContent = 'Tied round.';
             }
             
             nodePlayerScore.textContent = playerScore;
@@ -66,12 +72,12 @@ function game() {
         }
         if (playerScore >= 5 || computerScore >= 5) {
             const winner = (playerScore > computerScore) ? 'Player' : 'Computer';
-            nodeWinner.textContent = `${winner} wins!`
+            nodeWinner.textContent = `${winner} wins!`;
         }
     }
 
-    const moves = document.querySelectorAll('#rock, #paper, #scissors')
-    moves.forEach((move) => move.addEventListener('click', handleClick))
+    const moves = document.querySelectorAll('#rock, #paper, #scissors, .icon');
+    moves.forEach((move) => move.addEventListener('click', handleClick));
 }
 
 game()
